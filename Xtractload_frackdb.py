@@ -155,7 +155,7 @@ cur.execute('''CREATE TABLE Earthquake_History
                     Quake_Datetime       VARCHAR(255) NULL,
                     Latitude             FLOAT NULL,
                     Longitude            FLOAT NULL,
-                    Depth                FLOAT NULL
+                    Depth                FLOAT NULL,
                     Magnitude            FLOAT NULL,
                     Event_Type           VARCHAR(255) NULL,
                     State                VARCHAR(5) NULL,
