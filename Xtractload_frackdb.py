@@ -173,7 +173,7 @@ cur.execute('''CREATE TABLE Local_Earthquake
 
 conn.commit()
 
-
+"""
 ##-------------------------Water Body-------------------
 
 ##Place holder for Water_Body_Stage - Alex Yang
@@ -192,7 +192,7 @@ conn.commit()
 
 cur.execute('''CREATE TABLE Water_Body
                 (
-                    Water_Body_Id         INTEGER NOT NULL,
+                    Water_Body_Id        INTEGER NOT NULL,
                     Station_Name         VARCHAR(255) NULL,
                     Site_cd              VARCHAR(16),
                     Latitude             FLOAT NULL,
@@ -228,7 +228,7 @@ cur.execute('''CREATE TABLE Chemical_Toxicity
                 );''')
 
 conn.commit()
-
+"""
 ##----------------------Well Site -----------------------------
 cur.execute('''CREATE TABLE Well_Site_Stage
                 (
