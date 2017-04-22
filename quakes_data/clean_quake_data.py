@@ -78,5 +78,5 @@ counties = [geo_reverse[i]['admin2'] for i in range(len(geo_reverse))]
 df['state'] = states
 df['county'] = counties
 
-df.to_csv('quake_data_clean.csv')
+df.to_csv('quake_data_clean.csv',header=False,index=False)
 
