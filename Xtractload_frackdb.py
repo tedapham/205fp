@@ -302,7 +302,7 @@ conn.commit()
 csv_quake = csv.reader(file('quake_data_clean.csv'))
 
 print('Populating Quake History ....')
-for row in csv_wellsite:
+for row in csv_quake:
     cur.execute("INSERT into Earthquake_history (Quake_Id, Quake_Datetime, Latitude, Longitude, \
                 Magnitude,Event_Type, State, County) VALUES \
                 (%s, %s, %s, %s,%s, %s, %s,%s, %s,%s,%s);", 
