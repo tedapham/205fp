@@ -207,7 +207,7 @@ cur.execute('''CREATE TABLE Water_Body
                     type_description     VARCHAR NULL,
                     State                VARCHAR(2) NULL,
                     County               VARCHAR(255) NULL,
-                    Size                 VARCHAR(2) NULL
+                    Size                 VARCHAR(2) NULL,
 
                     PRIMARY KEY (Water_Body_Id)
                 ); ''')
