@@ -218,11 +218,11 @@ if (instab == 'All' or instab == 'Water_Body'):
                     Station_Name         VARCHAR(255) NULL,
                     Latitude             VARCHAR(255) NULL,
                     Longitude            VARCHAR(255) NULL,
-                    coord_datum          VARCHAR(8),
+                    coord_datum          VARCHAR(8) NULL,
                     drain_area_va        VARCHAR(255) NULL,
                     aquifier_cd          VARCHAR(255) NULL,
                     well_depth           VARCHAR(255) NULL,
-                    site_type            text NULL,
+                    site_type            VARCHAR(255) NULL,
                     State                VARCHAR(2) NULL,
                     County               VARCHAR(255) NULL,
                     Size                 VARCHAR(2) NULL
