@@ -370,13 +370,14 @@ if (instab == 'All' or instab == 'Water_Body'):
     #csv_water_sites = csv.reader(file('water_data.csv'), dialect='pipes')
 
     print('Populating water sites ....')
+    
     for row in csv_water_sites:
         cur.execute("INSERT into Water_Body_Stage (Water_Body_Id, \
                     Station_Name,Latitude,Longitude, \
                     coord_datum, drain_area_va, aquifier_cd, well_depth,site_type,\
-                     State, County, Size) VALUES) \
-                    (%s, %s,%s, %s,%s, %s,%s,%s, %s,%s,%s,%s);",
-                    (row[0], row[1], row[2],row[3], row[4],row[5], row[6],row[7], row[8],row[9], row[10], row[11]))
+                     State, County, Size) VALUES \
+                    (%s, %s,%s, %s,%s, %s,%s,%s, %s,%s,%s,%s);", (row[0], row[1], row[2],row[3], row[4],row[5], row[6],row[7], row[8],row[9], row[10], row[11]))
+
     conn.commit()
 
 print('Completed creation and load of staging tables')
