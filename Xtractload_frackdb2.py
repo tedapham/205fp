@@ -218,11 +218,11 @@ if (instab == 'All' or instab == 'Water_Body'):
                     Station_Name         VARCHAR(255) NULL,
                     Latitude             VARCHAR(255) NULL,
                     Longitude            VARCHAR(255) NULL,
-                    coord_datum          VARCHAR(8) NULL,
+                    coord_datum          VARCHAR(8),
                     drain_area_va        VARCHAR(255) NULL,
                     aquifier_cd          VARCHAR(255) NULL,
                     well_depth           VARCHAR(255) NULL,
-                    site_type            VARCHAR(255) NULL,
+                    site_type            text NULL,
                     State                VARCHAR(2) NULL,
                     County               VARCHAR(255) NULL,
                     Size                 VARCHAR(2) NULL
@@ -376,7 +376,7 @@ if (instab == 'All' or instab == 'Water_Body'):
                     coord_datum, drain_area_va, aquifier_cd, well_depth,\
                      State, County, Size) VALUES) \
              (%s,  %s,%s, %s,%s, %s,%s,%s, %s,%s);", (row[0], row[2], row[3],row[4], 
-             row[5],row[6], row[7],row[8], row[9],row[10], row[11]))
+             row[5],row[6], row[7],row[8], row[9],row[10], row[11],))
     conn.commit()
 
 print('Completed creation and load of staging tables')
