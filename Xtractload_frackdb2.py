@@ -215,14 +215,14 @@ if (instab == 'All' or instab == 'Water_Body'):
     cur.execute('''CREATE TABLE Water_Body_Stage
                 (
                     Water_Body_Id        VARCHAR(255) NOT NULL,
-                    Station_Name         VARCHAR(255) NULL,
+                    Station_Name         text NULL,
                     Latitude             VARCHAR(255) NULL,
                     Longitude            VARCHAR(255) NULL,
                     coord_datum          VARCHAR(8),
                     drain_area_va        VARCHAR(255) NULL,
                     aquifier_cd          VARCHAR(255) NULL,
                     well_depth           VARCHAR(255) NULL,
-                    site_type            text NULL,
+                    site_type            VARCHAR(255) NULL,
                     State                VARCHAR(2) NULL,
                     County               VARCHAR(255) NULL,
                     Size                 VARCHAR(2) NULL
@@ -372,11 +372,11 @@ if (instab == 'All' or instab == 'Water_Body'):
     print('Populating water sites ....')
     for row in csv_water_sites:
         cur.execute("INSERT into Water_Body_Stage (Water_Body_Id, \
-                    Latitude,Longitude, \
-                    coord_datum, drain_area_va, aquifier_cd, well_depth,\
+                    Station_Name,Latitude,Longitude, \
+                    coord_datum, drain_area_va, aquifier_cd, well_depth,site_type,\
                      State, County, Size) VALUES) \
-             (%s,  %s,%s, %s,%s, %s,%s,%s, %s,%s);", (row[0], row[2], row[3],row[4], 
-             row[5],row[6], row[7],row[8], row[9],row[10], row[11],))
+             (%s,  %s,%s, %s,%s, %s,%s,%s, %s,%s,%s,%s);", 
+             (row[0], row[1], row[2],row[3], row[4],row[5, row[6],row[7], row[8],row[9], row[10], row[11]))
     conn.commit()
 
 print('Completed creation and load of staging tables')
