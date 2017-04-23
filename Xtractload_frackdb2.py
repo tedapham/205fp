@@ -238,8 +238,6 @@ if (instab == 'All' or instab == 'Water_Body'):
 
     conn.commit()
 
-
-
     cur.execute('''CREATE TABLE Water_Body
                     (
                         Water_Body_Id        INTEGER NOT NULL,
@@ -367,8 +365,9 @@ if (instab == 'All' or instab == 'Earthquake_History'):
 
 if (instab == 'All' or instab == 'Water_Body'):
 ##----------------Load Water_Body_Stage -Placeholder - Alex Yang--------------------
-    csv.register_dialect('pipes', delimiter='|')
-    csv_water_sites = csv.reader(file('water_data.csv'), dialect='pipes')
+    #csv.register_dialect('pipes', delimiter='|')
+    csv_water_sites = csv.reader(file('water_data.csv'))
+    #csv_water_sites = csv.reader(file('water_data.csv'), dialect='pipes')
 
     print('Populating water sites ....')
     for row in csv_water_sites:
