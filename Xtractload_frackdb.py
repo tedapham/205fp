@@ -86,19 +86,30 @@ cur.execute('''CREATE TABLE County
 
 conn.commit()
 
-##--------------Chemical-------------------
-cur.execute('''CREATE TABLE Chemical_Stage
-            (
-	           CAS_No               VARCHAR(50) NOT NULL,
-	           Chemical_Name        VARCHAR(255) NULL
-            );''')
+##---------------------Chemical Toxicity-----------------------
+cur.execute('''CREATE TABLE Chemical_Toxicity_Stage
+                (
+                    CAS_No               VARCHAR(255) NOT NULL,
+                    TOXICITY             VARCHAR(255) NULL,
+                    Chemical_Name        VARCHAR(255) NULL,
+                    Substance_Type       VARCHAR(255) NULL,
+                    Substance_Note       VARCHAR(255) NULL,
+                    Chemical_Formula     VARCHAR(255) NULL,
+                    Mol_Weight           VARCHAR(255) NULL
+                );''')
 
-cur.execute('''CREATE TABLE Chemical
-            (
-	           CAS_No               VARCHAR(50) NOT NULL,
-	           Chemical_Name        VARCHAR(255) NULL,
-	           PRIMARY KEY (CAS_No)
-            );''')
+conn.commit()
+
+cur.execute('''CREATE TABLE Chemical_Toxicity
+                (
+                    CAS_No               VARCHAR(50) NOT NULL,
+                    TOXICITY             VARCHAR(255) NULL,
+                    Chemical_Name        VARCHAR(255) NULL,
+                    Substance_Type       VARCHAR(255) NULL,
+                    Substance_Note       VARCHAR(255) NULL,
+                    Chemical_Formula     VARCHAR(255) NULL,
+                    Mol_Weight           FLOAT NULL
+                );''')
 
 conn.commit()
 
@@ -149,7 +160,7 @@ conn.commit()
 ##-------------------------Earthquake-------------------
 
 ##Place holder for Earthquake_History_Stage - Ted Pham
-cur.execute('''CREATE TABLE Earthquake_History
+cur.execute('''CREATE TABLE Earthquake_History_Stage
                 (
                     Quake_Id             VARCHAR(255) NOT NULL,
                     Quake_Datetime       VARCHAR(255) NULL,
@@ -164,17 +175,31 @@ cur.execute('''CREATE TABLE Earthquake_History
                 );''')
 
 conn.commit()
+
+cur.execute('''CREATE TABLE Earthquake_History
+                (
+                    Quake_Id             INTEGER NOT NULL,
+                    Quake_Datetime       DATE NULL,
+                    Magnitude            FLOAT NULL,
+                    Latitude             VARCHAR(255) NULL,
+                    Longitude            VARCHAR(255) NULL,
+                    State_Code           VARCHAR(2) NULL,
+                    PRIMARY KEY (Quake_Id)
+                );''')
+
+conn.commit()
             
 cur.execute('''CREATE TABLE Local_Earthquake
                 (
                     Well_Id              INTEGER NOT NULL,
-                    Quake_Id             VARCHAR(255) NOT NULL,
+                    Quake_Id             INTEGER NOT NULL,
+                    Distance             FLOAT NULL,
                     PRIMARY KEY (Well_Id,Quake_Id)
                 ); ''')
 
 conn.commit()
 
-"""
+
 ##-------------------------Water Body-------------------
 
 ##Place holder for Water_Body_Stage - Alex Yang
@@ -194,42 +219,15 @@ conn.commit()
 cur.execute('''CREATE TABLE Water_Body
                 (
                     Water_Body_Id        INTEGER NOT NULL,
-                    Station_Name         VARCHAR(255) NULL,
-                    Site_cd              VARCHAR(16),
-                    Latitude             FLOAT NULL,
-                    Longitude            FLOAT NULL,
-                    State_CD             INTEGER NULL,
-                    County_CD            INTEGER NULL,
-                    coord_datum          VARCHAR(8),
-                    drain_area_va        FLOAT NULL,
-                    aquifier_cd          VARCHAR(255) NULL,
-                    well_depth           INTEGER NULL,
-                    site_type            VARCHAR(255) NULL,
-                    type_description     VARCHAR NULL,
-                    State                VARCHAR(2) NULL,
-                    County               VARCHAR(255) NULL,
-                    Size                 VARCHAR(2) NULL,
-
+                    Water_Body_Name      VARCHAR(255) NULL,
+                    Latitude             VARCHAR(255) NULL,
+                    Longitude            VARCHAR(255) NULL,
+                    State_Code           VARCHAR(2) NULL,
                     PRIMARY KEY (Water_Body_Id)
                 ); ''')
 
 conn.commit()
-##---------------------Chemical Toxicity-----------------------
-cur.execute('''CREATE TABLE Chemical_Toxicity
-                (
-                    CAS                  VARCHAR(255) NOT NULL,
-                    TOXICITY             VARCHAR(255) NULL,
-                    Chemical_Name        VARCHAR(255) NULL,
-                    Substance_Type       VARCHAR(255) NULL,
-                    Substance_Note       VARCHAR(255) NULL,
-                    Chemical_Formula     VARCHAR(255) NULL,
-                    Mol_Weight           FLOAT NULL
-                    
-                    PRIMARY KEY (CAS)
-                );''')
 
-conn.commit()
-"""
 ##----------------------Well Site -----------------------------
 cur.execute('''CREATE TABLE Well_Site_Stage
                 (
@@ -298,18 +296,6 @@ for row in csv_wellsite:
 
 conn.commit()
 
-##----------------Load Earthquake_History_Stage -Placeholder - Ted Pham-------------
-
-csv_quake = csv.reader(file('quake_data_clean.csv'))
-
-print('Populating Quake History ....')
-for row in csv_quake:
-    cur.execute("INSERT into Earthquake_history (Quake_Id, Quake_Datetime, Latitude, Longitude, \
-                Depth, Magnitude,Event_Type, State, County) VALUES \
-                (%s, %s, %s, %s,%s, %s, %s,%s,%s);", 
-                (row[0], row[1],row[2], row[3],row[4], row[5],row[6], row[7], row[8]))
-conn.commit()
-"""
 ##----------------Load Chemical Usage Stage ------------------------
 
 csv_chemusage = csv.reader(file('chemical_usage.csv'))
@@ -325,25 +311,47 @@ for row in csv_chemusage:
                 %s,%s,%s,%s,%s);", (row[0], row[1],row[2], row[3],row[4], row[5],row[6], row[7],row[8], row[9],row[10], row[11],row[12], row[13],row[14], row[15],row[16], row[17],row[18], row[19]))
 
 
+conn.commit()
 
+##----------------Load Chemical_Toxicity_Stage -Placeholder - Alex Yang----------------------
+csv_chem_toxicity = csv.reader(file(toxcast.csv))
+print('Populating Chemical Toxicity ....')
 
-##----------------Load Chemical Stage -Placeholder - Alex Yang----------------------
-
+for row in csv_chem_toxicity:
+    cur.execute("INSERT into Chemical_toxicity_stage (CAS_no, TOXICITY, Chemical_name, \
+                Substance_type, Sustance_Note, Chemical_Formula, Mol_Weight ) VALUES \
+                (%s, %s, %s,%s, %s, %s,%s);", (row[0], row[1],row[2], row[3],row[4], row[5],row[6] ))
 
 ##----------------Load Earthquake_History_Stage -Placeholder - Ted Pham-------------
 
+##-------------------------Earthquake-------------------
+
+##----------------Load Earthquake_History_Stage -Placeholder - Ted Pham-------------
+
+csv_quake = csv.reader(file('quake_data_clean.csv'))
+
 print('Populating Quake History ....')
-for row in csv_wellsite:
-    cur.execute("INSERT into Earthquake_history (Quake_Id, Quake_Datetime, Latitude, Longitude, \
-                Magnitude,Event_Type, State, County) VALUES \
-                (%s, %s, %s, %s,%s, %s, %s,%s, %s,%s,%s);", 
-                (row[0], row[1],row[2], row[3],row[4], row[5],row[6], row[7],row[8]))
-
-    
-##----------------Load Water_Body_Stage -Placeholder - Alex Yang--------------------
-
+for row in csv_quake:
+    cur.execute("INSERT into Earthquake_history_Stage (Quake_Id, Quake_Datetime, Latitude, Longitude, \
+                Depth, Magnitude,Event_Type, State, County) VALUES \
+                (%s, %s, %s, %s,%s, %s, %s,%s,%s);", 
+                (row[0], row[1],row[2], row[3],row[4], row[5],row[6], row[7], row[8]))
 conn.commit()
-"""
+
+
+##----------------Load Water_Body_Stage -Placeholder - Alex Yang--------------------
+csv_water_sites = csv.reader(file(water_data.csv))
+
+print('Populating water sites ....')
+for row in csv_water_sites:
+    cur.execute("INSERT into Water_Body (Water_Body_Id, Station_Name,Site_cd ,Latitude,Longitude, \
+                State_CD, County_CD, coord_datum, drain_area_va, aquifier_cd, well_depth,\
+                site_type, type_description, State, Size) VALUES) \
+         (%s, %s, %s,%s, %s, %s,%s, %s,%s,%s, %s,);", (row[0], row[1],row[2], row[3],row[4], 
+         row[5],row[6], row[7],row[8], row[9],row[10], row[11]))
+conn.commit()
 
 print('Completed creation and load of staging tables')
 conn.close()
+
+
