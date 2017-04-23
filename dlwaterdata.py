@@ -110,8 +110,9 @@ df=pd.merge(df,site_type_df,how='left',on='Site_cd')
 df=pd.merge(df,statecounty_lookup,how='left',on=['State_CD','County_CD'])
 
 df=df.set_index('site_no')
+df['station_nm'] = df['station_nm'].str.replace(',',' ')
 
 df2=df[['station_nm','Latitude','Longitude','dec_coord_datum_cd','drain_area_va',
     'nat_aqfr_cd','well_depth_va','Site_Type','State','County','Size']]
 
-df2.to_csv('water_data.csv',header=False)
+df2.to_csv('water_data2.csv',header = False)
