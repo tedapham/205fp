@@ -1,3 +1,3 @@
 # w205-Project
-![top 5 states](205fp/States.png)
+![top 5 states](States.png)
 
